@@ -1,0 +1,50 @@
+{
+  "student": {
+    "name": "Krishna Solanki",
+    "avatar": "avatar_ammar.png",
+    "id": "CGCE241234",
+    "course": "B.E. Computer Engineering",
+    "department": "Computer Science",
+    "year": "1st Year"
+  },
+  "surveyStats": {
+    "todayCount": 5,
+    "targetCount": 12,
+    "completionPercent": 42
+  },
+  "recentSurveys": [
+    {
+      "id": "mock-1",
+      "siteName": "Village Water Source Inspection",
+      "clientName": "Gram Panchayat Chhapi",
+      "description": "Routine check of village drinking water pipes, well depth and bacterial contamination levels.",
+      "priority": "High",
+      "location": "Chhapi, Banaskantha",
+      "date": "17 Jul 2026",
+      "time": "09:30 AM",
+      "status": "Completed"
+    },
+    {
+      "id": "mock-2",
+      "siteName": "Road Condition Survey",
+      "clientName": "Road & Buildings Dept",
+      "description": "Assessment of asphalt degradation, pothole mapping, and traffic flow monitoring.",
+      "priority": "Medium",
+      "location": "Palanpur, Gujarat",
+      "date": "17 Jul 2026",
+      "time": "11:15 AM",
+      "status": "In Progress"
+    },
+    {
+      "id": "mock-3",
+      "siteName": "Public Infrastructure Check",
+      "clientName": "Municipal Corporation",
+      "description": "Structural integrity verification of public library, playground safety barriers, and community hall.",
+      "priority": "Low",
+      "location": "Dantiwada, Banaskantha",
+      "date": "16 Jul 2026",
+      "time": "04:45 PM",
+      "status": "Pending"
+    }
+  ]
+}
