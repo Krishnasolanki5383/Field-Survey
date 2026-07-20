@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Alert, Linking } from 'react-native';
 import * as Location from 'expo-location';
 import * as Clipboard from 'expo-clipboard';
 
@@ -18,12 +18,32 @@ export function LocationView() {
       setLoading(true);
       setErrorMsg(null);
 
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      const { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
       setPermissionStatus(status);
 
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied.');
         setLoading(false);
+
+        if (canAskAgain) {
+          Alert.alert(
+            'Location Permission Required',
+            'Location access is required to retrieve GPS coordinates. Would you like to try again?',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Retry', onPress: () => requestPermissionAndFetchLocation() }
+            ]
+          );
+        } else {
+          Alert.alert(
+            'Location Permission Denied',
+            'Location permission has been permanently denied. Please enable it in system settings to use this feature.',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Open Settings', onPress: () => Linking.openSettings() }
+            ]
+          );
+        }
         return;
       }
 

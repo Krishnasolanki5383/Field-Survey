@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
-import data from '@/constants/data.json';
+import { useSurveys } from '@/context/SurveyContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabProfileScreen() {
-  const { student } = data;
+  const { inspectorProfile } = useSurveys();
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
         <Image 
-          source={require('@/assets/images/avatar_ammar.png')} 
+          source={{ uri: inspectorProfile.avatar }} 
           style={styles.avatarImage} 
         />
-        <Text style={styles.profileName}>{student.name}</Text>
+        <Text style={styles.profileName}>{inspectorProfile.name}</Text>
         <Text style={styles.profileSub}>Student Inspector</Text>
       </View>
 
@@ -25,7 +25,7 @@ export default function TabProfileScreen() {
             <Ionicons name="card-outline" size={18} color="#0F7A5E" />
             <Text style={styles.detailLabel}>Student ID:</Text>
           </View>
-          <Text style={styles.detailValue}>{student.id}</Text>
+          <Text style={styles.detailValue}>{inspectorProfile.id}</Text>
         </View>
 
         <View style={styles.detailRow}>
@@ -33,7 +33,7 @@ export default function TabProfileScreen() {
             <Ionicons name="school-outline" size={18} color="#0F7A5E" />
             <Text style={styles.detailLabel}>Course:</Text>
           </View>
-          <Text style={styles.detailValue}>{student.course}</Text>
+          <Text style={styles.detailValue}>{inspectorProfile.course}</Text>
         </View>
 
         <View style={styles.detailRow}>
@@ -41,7 +41,7 @@ export default function TabProfileScreen() {
             <Ionicons name="business-outline" size={18} color="#0F7A5E" />
             <Text style={styles.detailLabel}>Department:</Text>
           </View>
-          <Text style={styles.detailValue}>{student.department}</Text>
+          <Text style={styles.detailValue}>{inspectorProfile.department}</Text>
         </View>
 
         <View style={styles.detailRow}>
@@ -49,7 +49,7 @@ export default function TabProfileScreen() {
             <Ionicons name="calendar-outline" size={18} color="#0F7A5E" />
             <Text style={styles.detailLabel}>Academic Year:</Text>
           </View>
-          <Text style={styles.detailValue}>{student.year}</Text>
+          <Text style={styles.detailValue}>{inspectorProfile.year}</Text>
         </View>
       </View>
 

@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import { useSurveys } from '@/context/SurveyContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import data from '@/constants/data.json';
 
 export default function ReportsScreen() {
-  const { surveys } = useSurveys();
+  const { surveys, surveyStats } = useSurveys();
 
   // Calculate statistics
   const totalSurveys = surveys.length;
@@ -14,9 +13,16 @@ export default function ReportsScreen() {
   const mediumPriorityCount = surveys.filter(s => s.priority === 'Medium').length;
   const lowPriorityCount = surveys.filter(s => s.priority === 'Low').length;
 
-  const completedCount = data.surveyStats.todayCount; // Mock status counts for demonstration matching mockup
-  const targetCount = data.surveyStats.targetCount;
-  const completionPercent = data.surveyStats.completionPercent;
+  // Get current date string in YYYY-MM-DD
+  const todayStr = new Date().toISOString().split('T')[0];
+  const contextSurveysToday = surveys.filter((s) => s.date === todayStr).length;
+
+  const completedCount = surveyStats.todayCount + contextSurveysToday;
+  const targetCount = surveyStats.targetCount;
+  const completionPercent = Math.min(
+    100,
+    Math.round((completedCount / targetCount) * 100)
+  );
 
   return (
     <ScrollView style={styles.container}>

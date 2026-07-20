@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSurveys } from '@/context/SurveyContext';
-import data from '@/constants/data.json';
 
 export default function DashboardScreen() {
   const router = useRouter();
   const navigation = useNavigation();
-  const { surveys } = useSurveys();
+  const { surveys, inspectorProfile, surveyStats, recentSurveys } = useSurveys();
 
   // Get current date string in YYYY-MM-DD
   const todayStr = new Date().toISOString().split('T')[0];
@@ -19,8 +18,8 @@ export default function DashboardScreen() {
   const contextSurveysToday = surveys.filter((s) => s.date === todayStr).length;
 
   // Combine initial JSON statistics with context updates
-  const todayCount = data.surveyStats.todayCount + contextSurveysToday;
-  const targetCount = data.surveyStats.targetCount;
+  const todayCount = surveyStats.todayCount + contextSurveysToday;
+  const targetCount = surveyStats.targetCount;
   const completionPercent = Math.min(
     100,
     Math.round((todayCount / targetCount) * 100)
@@ -56,7 +55,7 @@ export default function DashboardScreen() {
           </Pressable>
           <Pressable onPress={() => router.push('/(tabs)/profile')}>
             <Image
-              source={require('@/assets/images/avatar_ammar.png')}
+              source={{ uri: inspectorProfile.avatar }}
               style={styles.headerAvatar}
             />
           </Pressable>
@@ -68,7 +67,7 @@ export default function DashboardScreen() {
         <View style={styles.welcomeBanner}>
           <View>
             <Text style={styles.welcomeTextLabel}>{getGreeting()}</Text>
-            <Text style={styles.welcomeTextName}>{data.student.name}</Text>
+            <Text style={styles.welcomeTextName}>{inspectorProfile.name}</Text>
           </View>
           <View style={styles.badgeContainer}>
             <Ionicons name="shield-checkmark" size={16} color="#ffffff" style={{ marginRight: 4 }} />
@@ -81,7 +80,7 @@ export default function DashboardScreen() {
           <View style={styles.badgeLeft}>
             <View style={styles.avatarOutlineRing}>
               <Image
-                source={require('@/assets/images/avatar_ammar.png')}
+                source={{ uri: inspectorProfile.avatar }}
                 style={styles.profileBadgeAvatar}
               />
             </View>
@@ -96,7 +95,7 @@ export default function DashboardScreen() {
               <Ionicons name="id-card-outline" size={14} color="#0F7A5E" style={styles.badgeDetailIcon} />
               <View>
                 <Text style={styles.badgeDetailLabel}>ID NUMBER</Text>
-                <Text style={styles.badgeDetailValue}>{data.student.id}</Text>
+                <Text style={styles.badgeDetailValue}>{inspectorProfile.id}</Text>
               </View>
             </View>
 
@@ -105,7 +104,7 @@ export default function DashboardScreen() {
               <View>
                 <Text style={styles.badgeDetailLabel}>SPECIALIZATION</Text>
                 <Text style={styles.badgeDetailValue} numberOfLines={1}>
-                  {data.student.course.replace('B.E. ', '')}
+                  {inspectorProfile.course.replace('B.E. ', '')}
                 </Text>
               </View>
             </View>
@@ -114,7 +113,7 @@ export default function DashboardScreen() {
               <Ionicons name="business-outline" size={14} color="#0F7A5E" style={styles.badgeDetailIcon} />
               <View>
                 <Text style={styles.badgeDetailLabel}>DEPARTMENT</Text>
-                <Text style={styles.badgeDetailValue}>{data.student.department}</Text>
+                <Text style={styles.badgeDetailValue}>{inspectorProfile.department}</Text>
               </View>
             </View>
           </View>
@@ -221,7 +220,7 @@ export default function DashboardScreen() {
         </View>
 
         <View style={styles.recentList}>
-          {data.recentSurveys.map((survey) => {
+          {recentSurveys.map((survey) => {
             // Pick styling based on status and priority
             let badgeBg = '#E8F5E9';
             let badgeColor = '#2E7D32';
